@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+{% include "cabecera.html" %}
+<body>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <!-- /.navbar-top-links -->
+            {% include "barra_top.html" %}
+            <!-- /.navbar-static-side -->
+            {% include "barra_lat.html" %}
+        </nav>
+        <div id="page-wrapper">
+            <div id="panel_principal" class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Turnos de Empleados</h4>
+                </div>
+                <!-- /.panel-heading -->
+                <form role="form" name="form_rep" method="post" action="/reporte_horarios/">{% csrf_token %}
+                    <input type="hidden" name="fecha_int" id="fecha_aux" value="{{ fecha_int }}">
+                    <input type="hidden" name="semana" id="semana_aux" value="">
+                </form>
+                <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-4 padre">
+                                <form role="form" name="form_semanas" method="post" action="/reporte_horarios/">{% csrf_token %}
+                                    <button id="semana_anterior" type="submit" class="btn btn-lg btn-danger hijo"><i class="fa fa-arrow-left fa-fw"></i> Anterior</button>
+                                    <input type="hidden" name="fecha_int" id="fecha_aux" value="{{ fecha_int }}">
+                                    <input type="hidden" name="semana" id="semana_aux" value="anterior">
+                                </form>
+                            </div>
+                            <div class="col-sm-4 padre">
+                                <p id="semana_actual" class="alert alert-info hijo"><strong>Semana del {{ fecha_desde }} al {{ fecha_hasta }} </strong></p>
+                            </div>
+                            <div class="col-sm-4 padre">
+                                <form role="form" name="form_semanas" method="post" action="/reporte_horarios/">{% csrf_token %}
+                                    <button id="semana_siguiente" type="submit" class="btn btn-lg btn-success hijo">Siguiente <i class="fa fa-arrow-right fa-fw"></i></button>
+                                    <input type="hidden" name="fecha_int" id="fecha_int" value="{{ fecha_int }}">
+                                    <!--<input type="hidden" name="fecha_desde" id="fecha_desde" value="{{ fecha_desde }}"> -->
+                                    <input type="hidden" name="fecha_lunes" id="fecha_lunes" value="{{ fecha_lunes }}">
+                                    <input type="hidden" name="fecha_martes" id="fecha_martes" value="{{ fecha_martes }}">
+                                    <input type="hidden" name="fecha_miercoles" id="fecha_miercoles" value="{{ fecha_miercoles }}">
+                                    <input type="hidden" name="fecha_jueves" id="fecha_jueves" value="{{ fecha_jueves }}">
+                                    <input type="hidden" name="fecha_viernes" id="fecha_viernes" value="{{ fecha_viernes }}">
+                                    <input type="hidden" name="fecha_sabado" id="fecha_sabado" value="{{ fecha_sabado }}">
+                                    <input type="hidden" name="fecha_domingo" id="fecha_domingo" value="{{ fecha_domingo }}">
+                                    <!--<input type="hidden" name="comentario" id="comentario" value="{{ comentario }}">-->
+                                    <input type="hidden" name="semana" id="semana" value="siguiente">
+                                </form>
+                            </div>
+                        </div>
+
+                    <br>
+
+                    <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-reporte_horarios">
+                        <thead>
+                            <tr>
+                                <th>Empleado</th>
+                                <th>Lun {{fecha_lunes}}</th>
+                                <th>Mar {{fecha_martes}}</th>
+                                <th>Mié {{fecha_miercoles}}</th>
+                                <th>Jue {{fecha_jueves}}</th>
+                                <th>Vie {{fecha_viernes}}</th>
+                                <th>Sáb {{fecha_sabado}}</th>
+                                <th>Dom {{fecha_domingo}}</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for e in empl_list %}
+                                <tr class="odd gradeX">
+                                    <td>{{ e.nombre }}</td>
+
+                                    <td><div style="margin-bottom: 0px; padding: 2px;" class="alert alert-{{ e.lunes_alert }}"><strong>{{ e.lunes }}</strong></div></td>
+                                    <td><div style="margin-bottom: 0px; padding: 2px;" class="alert alert-{{ e.martes_alert }}"><strong>{{ e.martes }}</strong></div></td>
+                                    <td><div style="margin-bottom: 0px; padding: 2px;" class="alert alert-{{ e.miercoles_alert }}"><strong>{{ e.miercoles }}</strong></div></td>
+                                    <td><div style="margin-bottom: 0px; padding: 2px;" class="alert alert-{{ e.jueves_alert }}"><strong>{{ e.jueves }}</strong></div></td>
+                                    <td><div style="margin-bottom: 0px; padding: 2px;" class="alert alert-{{ e.viernes_alert }}"><strong>{{ e.viernes }}</strong></div></td>
+                                    <td><div style="margin-bottom: 0px; padding: 2px;" class="alert alert-{{ e.sabado_alert }}"><strong>{{ e.sabado }}</strong></div></td>
+                                    <td><div style="margin-bottom: 0px; padding: 2px;" class="alert alert-{{ e.domingo_alert }}"><strong>{{ e.domingo }}</div></td>
+                                    </strong><td class="padre">
+                                        <button title="Asignar turnos" class="btn btn-xs hijo" onclick="dame_empleado_horario({{ e.id }} )" >
+                                            <i class="fa fa-clock-o fa-fw"></i>
+                                        </button>
+                                        <button title="Repetir semana anterior" onclick="repetir_semana_anterior({{ e.id }},{{ fecha_int }})"class="btn btn-xs hijo" onclick="">
+                                            <i class="fa fa-repeat fa-fw"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <!-- Modal -->
+
+                    <div class="modal fade" id="nuevoHorario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 id="nombreEmpleado" style="color:white;" class="modal-title" ></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div style="display:none;" id="errores" class="alert alert-danger"></div>
+                                    <div style="display:none;" id="id_empleado" class="alert alert-danger"></div>
+                                    <form role="form" name="form" method="post" action="">{% csrf_token %}
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div id="lunes" class="form-group">
+                                                    <label></label>
+                                                    <select id="turnoLunes" class="form-control">
+                                                    {% for key,value in turnos %}
+                                                        <option value="{{ key }}">{{ value }}</option>
+                                                    {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div id="martes" class="form-group">
+                                                    <label></label>
+                                                    <select id="turnoMartes" class="form-control">
+                                                    {% for key,value in turnos %}
+                                                        <option value="{{ key }}">{{ value }}</option>
+                                                    {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div id="miercoles" class="form-group">
+                                                    <label></label>
+                                                    <select id="turnoMiercoles" class="form-control">
+                                                    {% for key,value in turnos %}
+                                                        <option value="{{ key }}">{{ value }}</option>
+                                                    {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div id="jueves" class="form-group">
+                                                    <label></label>
+                                                    <select id="turnoJueves" class="form-control">
+                                                    {% for key,value in turnos %}
+                                                        <option value="{{ key }}">{{ value }}</option>
+                                                    {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div id="viernes" class="form-group">
+                                                    <label></label>
+                                                    <select id="turnoViernes" class="form-control">
+                                                    {% for key,value in turnos %}
+                                                        <option value="{{ key }}">{{ value }}</option>
+                                                    {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div id="sabado" class="form-group">
+                                                    <label></label>
+                                                    <select id="turnoSabado" class="form-control">
+                                                    {% for key,value in turnos %}
+                                                        <option value="{{ key }}">{{ value }}</option>
+                                                    {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div id="domingo" class="form-group">
+                                                    <label>Domingo</label>
+                                                    <select id="turnoDomingo" class="form-control">
+                                                    {% for key,value in turnos %}
+                                                        <option value="{{ key }}">{{ value }}</option>
+                                                    {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <div class="form-group">
+                                                    <label>Comentario</label>
+                                                    <textarea id="comentario" name="comentario" class="form-control" rows="1"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                                    <button type="button" onclick="guardar_horario();" class="btn btn-success">Guardar</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                    <!-- /.modal -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    {% include "pie.html" %}
+    <script>
+
+        $(document).ready(function() {
+
+            $('#dataTables-reporte_horarios').DataTable({
+                responsive: true,
+                "searching": false,
+                "ordering": false,
+                "paging":   false,
+                "info":     false
+            });
+        
+        });
+
+
+        function repetir_semana_anterior(id_empleado,fecha_int){
+
+            $.ajax({
+                method: "POST",
+                url: "/repetir_semana_anterior/",
+                data: { id_empleado: id_empleado, fecha_int: fecha_int },
+                dataType: "json"
+            }).done(function(retorno) {
+                document.form_rep.submit();
+            });
+
+
+        }
+
+        function dame_empleado_horario(id){
+            $('#id_empleado').html(id);
+            fecha_inicio = $("#fecha_int").val();
+            /* fecha_desde = $("#fecha_desde").val(); */
+
+            fecha_lunes = $("#fecha_lunes").val();
+            fecha_martes = $("#fecha_martes").val();
+            fecha_miercoles = $("#fecha_miercoles").val();
+            fecha_jueves = $("#fecha_jueves").val();
+            fecha_viernes = $("#fecha_viernes").val();
+            fecha_sabado = $("#fecha_sabado").val();
+            fecha_domingo = $("#fecha_domingo").val();
+            /*comentario = $('#comentario').val(); */
+
+            $.ajax({
+                method: "POST",
+                url: "/dame_empleado_horario/",
+                data: { id_empleado: id, fecha_inicio: fecha_inicio },
+                dataType: "json"
+            }).done(function(retorno) {
+                $(".modal-header h4").html("Horario de: " + retorno.nombre);
+                $("#lunes label").html("Lunes " + fecha_lunes);
+                $("#turnoLunes").val(retorno.lunes);
+                $("#martes label").html("Martes " + fecha_martes);
+                $("#turnoMartes").val(retorno.martes);
+                $("#miercoles label").html("Miércoles " + fecha_miercoles);
+                $("#turnoMiercoles").val(retorno.miercoles);
+                $("#jueves label").html("Jueves " + fecha_jueves);
+                $("#turnoJueves").val(retorno.jueves);
+                $("#viernes label").html("Viernes " + fecha_viernes);
+                $("#turnoViernes").val(retorno.viernes);
+                $("#sabado label").html("Sábado " + fecha_sabado);
+                $("#turnoSabado").val(retorno.sabado);
+                $("#domingo label").html("Domingo " + fecha_domingo);
+                $("#turnoDomingo").val(retorno.domingo);
+                $("#comentario").val(retorno.comentario);
+                $('#nuevoHorario').modal('show'); 
+            });
+
+        }
+
+        function guardar_horario(){
+            $("#errores").hide();
+
+            id_empleado = $('#id_empleado').html();
+            lunes = $("#turnoLunes").val();
+            martes = $("#turnoMartes").val();
+            miercoles = $("#turnoMiercoles").val();
+            jueves = $("#turnoJueves").val();
+            viernes = $("#turnoViernes").val();
+            sabado = $("#turnoSabado").val();
+            domingo = $("#turnoDomingo").val();
+            fecha_inicio = $("#fecha_int").val();
+            comentario = $("#comentario").val();
+
+            $.ajax({
+                method: "POST",
+                url: "/guardar_horario/",
+                data: { id_empleado: id_empleado ,lunes: lunes, martes: martes, miercoles: miercoles, jueves: jueves, viernes: viernes, sabado: sabado, domingo: domingo, fecha_inicio: fecha_inicio, comentario: comentario },
+                dataType: "json"
+
+            }).done(function(retorno) {
+                if (retorno.error != ""){
+                    $("#errores").html(retorno.error)
+                    $("#errores").show();
+                }else{
+                    document.form_rep.submit();
+                }
+            });
+
+            $("#errores").html("");
+            $("#errores").hide();
+
+        }
+
+    </script>
+
+</body>
+</html>

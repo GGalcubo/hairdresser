@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+{% include "cabecera.html" %}
+<body>
+	<div style="margin-top:25px; margin-left: 25px;">
+		<p>Fecha: {{ fecha }} {{ hora }}  <br>
+		Nombre: {{ cliente.nombre }} {{ cliente.apellido }}<br>
+		Ficha de color: {{ cliente.color_pelo }}</p>
+	</div>
+
+{% include "pie.html" %}
+
+	<script>
+	$(document).ready(function() {
+            window.print();
+        });
+    </script>
+</body>
+</html>

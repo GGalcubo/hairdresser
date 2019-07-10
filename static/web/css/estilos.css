@@ -1,0 +1,211 @@
+html {
+    height: 100vh;
+}
+
+#panel_principal {
+    margin-bottom: 0px;
+}
+
+@media (min-width: 768px) {
+	.sidebar {
+	/*  z-index: 1; 
+	    position: absolute; */
+	    width: 175px;
+	/*  margin-top: 51px; */
+	}
+
+	#page-wrapper {
+	/*    position: inherit; */
+	    margin: 0 0 0 175px;
+	    padding: 0 0 0 2px;
+	    border-left: 1px solid #e7e7e7; */
+	}
+
+}
+
+a:focus, a:hover {
+    text-decoration: none;
+}
+
+.padre {
+	text-align: center;
+/*	width: 100%; */
+}
+
+.hijo {
+	display: inline-block;
+}
+
+#calendario {
+	width: 250px;
+}
+
+i.fa-times {
+	color: red;
+}
+
+i.fa-pencil {
+	color: green;
+}
+
+i.fa-eye {
+	color: blue;
+}
+
+i.fa-plus {
+    color: green;
+}
+
+i.fa-check {
+    color: green;
+}
+
+i.fa-print {
+    color: blue;
+}
+
+i.fa-clock-o {
+    color: green;
+}
+
+i.fa-repeat {
+    color: blue;
+}
+
+#semana_anterior {
+    margin-bottom: 10px;
+}
+
+#semana_actual {
+    margin-bottom: 10px;
+}
+
+th {
+	text-align: center;
+}
+
+#dataTables-reporte_horarios td {
+    text-align: center;
+}
+
+#dataTables-reporte_horarios td:nth-last-child(9) {
+    text-align: left;
+}
+
+#dataTables-reporte_facturacion td {
+    text-align: center;
+}
+
+#dataTables-reporte_facturacion td:nth-last-child(4) {
+    text-align: left;
+}
+
+#dataTables-reporte_horarios .alert-warning {
+    color: #8a6d3b;
+    background-color: #faebcc;
+    border-color: #f9cf78;
+}
+
+#dataTables-reporte_horarios .alert-success {
+    color: #3c763d;
+    background-color: #d6e9c6;
+    border-color: #abc397;
+}
+
+#dataTables-reporte_horarios .alert-info {
+    color: #31708f;
+    background-color: #bce8f1;
+    border-color: #90c2cc;
+}
+
+#dataTables-reporte_horarios .alert-danger {
+    color: #a94442;
+    background-color: #ebccd1;
+    border-color: #cea2a2;
+}
+
+#dataTables-reporte_horarios .alert-feriado {
+    color: #4f4996;
+    background-color: #bcb9db;
+    border-color: #7c78a9;
+}
+
+h4 {
+	color: #dfdfdf;
+}
+
+h3.panel-title {
+    color: #dfdfdf;
+}
+
+.panel-default>.panel-heading {
+    color: #333333;
+    background-color: #444444;
+    border-color: #dddddd;
+}
+
+.panel-body {
+    padding: 15px;
+    background: white;
+}
+
+.navbar-default {
+    background-color: #dddddd;
+    border-color: #e7e7e7;
+}
+
+.navbar-default .navbar-brand {
+    color: #444444;
+}
+
+.navbar-brand {
+    float: left;
+    height: 50px;
+    padding: 15px 15px;
+    font-size: 30px;
+    line-height: 20px;
+}
+
+#wrapper {
+    width: 100%;
+    background: #dddddd;
+}
+
+
+/* /////// MODALS /////// */
+
+.modal-header {
+    padding: 15px;
+    background: #444;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.modal-header .close {
+    margin-top: -2px;
+    color: white;
+}
+
+h4#myModalLabel,
+h3#myModalLabel,
+h4#modalProducto,
+h4#modalEmpleado,
+h4#modalCliente {
+	color: #dddddd;
+}
+
+h4.modal-title {
+	color: #444;
+}
+
+hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 0;
+    border-top: 1px solid #eee;
+}
+
+@media (min-width: 768px) {
+    #modal-factura{
+        width: 75%;
+    }
+}

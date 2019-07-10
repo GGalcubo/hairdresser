@@ -1,0 +1,85 @@
+{% load static %}
+
+<!-- jQuery -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+
+
+<!-- Latest compiled and minified JavaScript -->
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+
+<!-- Metis Menu Plugin JavaScript -->
+
+<script src="{% static 'web/js/metisMenu.js' %}"></script>
+
+
+
+<!-- Morris Charts JavaScript -->
+
+<script src="{% static 'web/js/raphael.js' %}"></script>
+
+<script src="{% static 'web/js/morris.js' %}"></script>
+
+<script src="{% static 'web/js/morris-data.js' %}"></script>
+
+
+
+<!-- DataTables JavaScript -->
+
+<script src="{% static 'web/js/jquery.dataTables.min.js' %}"></script>
+
+<script src="{% static 'web/js/dataTables.bootstrap.min.js' %}"></script>
+
+<script src="{% static 'web/js/dataTables.responsive.js' %}"></script>
+
+
+
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="{% static 'web/js/sb-admin-2.js' %}"></script>
+
+
+
+<!-- SCRIPTS para el DATEPICKER -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+
+<script>
+ $.datepicker.regional['es'] = {
+ closeText: 'Cerrar',
+ prevText: '<Ant',
+ nextText: 'Sig>',
+ currentText: 'Hoy',
+ monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+ monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+ dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+ dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+ dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+ weekHeader: 'Sm',
+ dateFormat: 'dd/mm/yy',
+ firstDay: 1,
+ isRTL: false,
+ showMonthAfterYear: false,
+ changeMonth: true,
+ showOtherMonths: true,
+ selectOtherMonths: true,
+ changeYear: true,
+ yearSuffix: ''
+ };
+ $.datepicker.setDefaults($.datepicker.regional['es']);
+/*
+$(function () {
+$(".fecha_datepicker").datepicker();
+});
+*/
+</script>
+
+
+
+<script src='{% static "web/js/django_ajax.js" %}'></script>
